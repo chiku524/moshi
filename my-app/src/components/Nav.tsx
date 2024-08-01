@@ -78,10 +78,10 @@ export const Nav = () => {
         <hr className="w-10/12" />
       </div>
       {wallet ? 
-      <div className="fixed bottom-3 bg-red-700 text-sky-700 p-2 rounded-tr-3xl rounded-bl-3xl hover:border-lime-400 hover:cursor-pointer hover:border-2 hover:shadow-red-700 hover:shadow-md" onClick={() => (wallet ? disconnect(wallet) : connect())}>
+      <div className="fixed top-4 right-4 bg-red-700 text-black p-2 rounded-tr-3xl rounded-bl-3xl hover:border-lime-400 hover:cursor-pointer hover:border-2 hover:shadow-red-700 hover:shadow-md md:h-fit" onClick={() => (wallet ? disconnect(wallet) : connect())}>
         {connecting ? 'Connecting' : "Disconnect"}
       </div> : 
-      <div className="fixed bottom-3 bg-sky-600 text-lime-400 p-2 rounded-tr-3xl rounded-bl-3xl hover:border-lime-400 hover:cursor-pointer hover:border-2 hover:shadow-sky-600 hover:shadow-md" onClick={() => (wallet ? disconnect(wallet) : connect())}>
+      <div className="fixed top-4 right-4 bg-sky-600 text-lime-400 p-2 rounded-tr-3xl rounded-bl-3xl hover:border-lime-400 hover:cursor-pointer hover:border-2 hover:shadow-sky-600 hover:shadow-md md:h-fit" onClick={() => (wallet ? disconnect(wallet) : connect())}>
         {connecting ? 'Connecting' : 'Connect'}
       </div>
       }
