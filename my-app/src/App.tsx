@@ -7,7 +7,7 @@ function App() {
   return (
     <div className="flex flex-row md:flex-col font-mono">
       <Nav />
-      <div className="flex flex-col w-full h-screen bg-sky-800">
+      <div className="flex flex-col w-full h-screen bg-slate-950">
         <Dashboard />
         <Footer />
       </div>
