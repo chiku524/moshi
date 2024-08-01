@@ -21,6 +21,6 @@
     "jsx": "react-jsx"
   },
   "include": [
-    "src", "**/*.ts", "**/*.tsx", "index.d.ts", "setupTests.ts", "src/components/Nav.tsx"  
+    "src", "**/*.ts", "**/*.tsx", "index.d.ts", "setupTests.ts"
   ]
 }

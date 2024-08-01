@@ -55,8 +55,8 @@ export const Nav = () => {
   useAccountCenter()
 
   return (
-    <nav className="w-auto bg-slate-950 bg-opacity-90 flex flex-col sm:w-screen text-3xl sm:text-lg items-center">
-      <Link to="/" className="text-violet-700 flex flex-col items-center m-6 sm:m-1 sm:text-3xl">
+    <nav className="w-auto bg-slate-950 bg-opacity-90 flex flex-col md:w-screen text-3xl md:text-lg items-center">
+      <Link to="/" className="text-violet-700 flex flex-col items-center m-6 md:m-1 md:text-3xl">
         <span className="flex flex-row justify-start items-center">
           <p>M</p>
           <p>O</p>
@@ -67,7 +67,7 @@ export const Nav = () => {
         <img src={moshiLogo} className="min-w-24 min-h-24 max-w-24 max-h-24" alt="moshi logo"/>
       </Link>
       <hr className="w-10/12" />
-      <div className="flex flex-col items-center sm:flex-row">
+      <div className="flex flex-col items-center md:flex-row">
         <Link to="/" className={`${pathname.pathname === "/" ? "bg-slate-900 rounded-tr-3xl rounded-bl-3xl border-violet-500 border-2" : ""} m-3 text-sky-400 hover:text-sky-500 p-1.5`}>
           Dashboard
         </Link>
