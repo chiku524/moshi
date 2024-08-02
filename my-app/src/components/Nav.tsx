@@ -1,8 +1,10 @@
+import { useState, useLayoutEffect } from 'react';
 import { init, useAccountCenter, useConnectWallet } from '@web3-onboard/react';
 import injectedModule from '@web3-onboard/injected-wallets';
 import { ethers } from 'ethers';
 import moshiLogo from '../images/moshi-logo.png';
 import { Link, useLocation } from "react-router-dom";
+import { gsap } from 'gsap';
 
 
 // Sign up to get your free API key at https://explorer.blocknative.com/?signup=true
@@ -40,6 +42,9 @@ import { Link, useLocation } from "react-router-dom";
   });
 
 export const Nav = () => {
+  const [bubArray] = useState<number[]>([]);
+  const [bubArray1] = useState<number[]>([]);
+  const [bubArray2] = useState<number[]>([]);
   const [{ wallet, connecting }, connect, disconnect] = useConnectWallet()
   const pathname = useLocation();
 
@@ -54,20 +59,86 @@ export const Nav = () => {
 
   useAccountCenter()
 
+  for(let i=0; i<25; i++) {
+    bubArray.push(i);
+  }
+  for(let i=0; i<25; i++) {
+    bubArray1.push(i);
+  }
+  for(let i=0; i<25; i++) {
+    bubArray2.push(i);
+  }
+
+  useLayoutEffect(() => {
+    const aa = document.querySelector("#tank");
+    let tankWidth = aa?.clientWidth;
+    let tankHeight = aa?.clientHeight;
+    tankHeight ? tankHeight += 100 : tankHeight = tankHeight;
+    bubArray.forEach(el => {
+      let randomX = gsap.utils.random(0, tankWidth? tankWidth : 375, true);
+      let randomY = gsap.utils.random(-500, 0, true);
+      gsap.set(`.bubble-${el}`, {
+        x: randomX(),
+        y: randomY(),
+      })
+    })
+    bubArray1.forEach(el => {
+      let randomX = gsap.utils.random(0, tankWidth? tankWidth : 375, true);
+      let randomY = gsap.utils.random(-500, 0, true);
+      gsap.set(`.bubble-${el}`, {
+        x: randomX(),
+        y: randomY(),
+      })
+    })
+    bubArray2.forEach(el => {
+      let randomX = gsap.utils.random(0, tankWidth? tankWidth : 375, true);
+      let randomY = gsap.utils.random(-500, 0, true);
+      gsap.set(`.bubble-${el}`, {
+        x: randomX(),
+        y: randomY(),
+      })
+    })
+
+    // let randomY = gsap.utils.random(0, tankHeight? tankHeight : 375, true);
+
+    gsap.to("#bubble", {
+      y: tankHeight,
+      repeat: -1,
+      duration: 3.5,
+    })
+    gsap.to("#bubble1", {
+      y: tankHeight,
+      repeat: -1,
+      duration: 3.5,
+      delay: 2.5
+    })
+    gsap.to("#bubble2", {
+      y: tankHeight,
+      repeat: -1,
+      duration: 3.5,
+      delay: 1.5
+    })
+  }, [])
+
   return (
     <nav className="w-auto bg-slate-950 bg-opacity-90 flex flex-col md:w-screen text-3xl md:text-lg items-center">
-      <Link to="/" className="text-violet-700 flex flex-col items-center m-6 md:m-1 md:text-3xl">
-        <span className="flex flex-row justify-start items-center">
+      <Link to="/" id="logo" className="text-violet-700 flex flex-col items-center p-6 md:p-1 md:text-3xl relative w-3/4">
+        <span className="flex flex-row justify-start items-center z-10">
           <p>M</p>
           <p>O</p>
           <p>S</p>
           <p>H</p>
           <p>I</p>
         </span>
-        <img src={moshiLogo} className="min-w-24 min-h-24 max-w-24 max-h-24" alt="moshi logo"/>
+        <img src={moshiLogo} className="min-w-24 min-h-24 max-w-24 max-h-24 z-10" alt="moshi logo"/>
+        <div id="tank" className="absolute w-full h-full overflow-hidden med:top-0">
+          {bubArray && bubArray.map((item, index) => <div key={index} id="bubble" className={`bubble-${index} aspect-square rounded-full bg-white bg-opacity-50 absolute top-0 left-0 w-0.5`} />)}
+          {bubArray1 && bubArray1.map((item, index) => <div key={index} id="bubble1" className={`bubble-${index} aspect-square rounded-full bg-white bg-opacity-50 absolute top-0 left-0 w-0.5`} />)}
+          {bubArray2 && bubArray2.map((item, index) => <div key={index} id="bubble2" className={`bubble-${index} aspect-square rounded-full bg-white bg-opacity-50 absolute top-0 left-0 w-0.5`} />)}
+        </div>
       </Link>
       <hr className="w-10/12" />
-      <div className="flex flex-col items-center md:flex-row">
+      <div className="flex flex-col items-center md:flex-row z-10">
         <Link to="/" className={`${pathname.pathname === "/" ? "bg-slate-900 rounded-tr-3xl rounded-bl-3xl border-violet-500 border-2" : ""} m-3 text-sky-400 hover:text-sky-500 p-1.5`}>
           Dashboard
         </Link>
