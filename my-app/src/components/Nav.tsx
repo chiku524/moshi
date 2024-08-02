@@ -122,7 +122,7 @@ export const Nav = () => {
 
   return (
     <nav className="w-auto bg-slate-950 bg-opacity-90 flex flex-col md:w-screen text-3xl md:text-lg items-center">
-      <Link to="/" id="logo" className="text-violet-700 flex flex-col items-center p-6 md:p-1 md:text-3xl relative w-3/4">
+      <Link to="/" id="logo" className="text-violet-700 flex flex-col items-center p-6 md:p-1 md:pt-5 md:text-3xl relative w-3/4">
         <span className="flex flex-row justify-start items-center z-10">
           <p>M</p>
           <p>O</p>
@@ -131,7 +131,7 @@ export const Nav = () => {
           <p>I</p>
         </span>
         <img src={moshiLogo} className="min-w-24 min-h-24 max-w-24 max-h-24 z-10" alt="moshi logo"/>
-        <div id="tank" className="absolute w-full h-full overflow-hidden med:top-0">
+        <div id="tank" className="absolute w-full h-full overflow-hidden top-0">
           {bubArray && bubArray.map((item, index) => <div key={index} id="bubble" className={`bubble-${index} aspect-square rounded-full bg-white bg-opacity-50 absolute top-0 left-0 w-0.5`} />)}
           {bubArray1 && bubArray1.map((item, index) => <div key={index} id="bubble1" className={`bubble-${index} aspect-square rounded-full bg-white bg-opacity-50 absolute top-0 left-0 w-0.5`} />)}
           {bubArray2 && bubArray2.map((item, index) => <div key={index} id="bubble2" className={`bubble-${index} aspect-square rounded-full bg-white bg-opacity-50 absolute top-0 left-0 w-0.5`} />)}
