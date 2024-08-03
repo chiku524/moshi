@@ -99,8 +99,6 @@ export const Nav = () => {
       })
     })
 
-    // let randomY = gsap.utils.random(0, tankHeight? tankHeight : 375, true);
-
     gsap.to("#bubble", {
       y: tankHeight,
       repeat: -1,
