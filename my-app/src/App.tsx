@@ -5,7 +5,7 @@ import './index.css';
 
 function App() {
   return (
-    <div className="flex flex-row md:flex-col font-mono bg-slate-700">
+    <div className="flex flex-row md:flex-col font-mono bg-slate-700 min-h-full min-w-full">
       <Nav />
       <div className="flex flex-col w-full h-screen bg-slate-700">
         <Dashboard />

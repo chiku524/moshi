@@ -138,7 +138,7 @@ export const Nav = () => {
   }, [])
 
   return (
-    <nav className="w-auto bg-zinc-950 flex flex-col md:w-screen text-3xl md:text-lg items-center">
+    <nav className="w-auto bg-zinc-950 flex flex-col md:w-screen text-3xl md:text-lg items-center min-h-full med:fixed med:left-0">
       <Link to="/" id="logo" className="text-violet-700 flex flex-col items-center p-6 md:p-1 md:pt-5 md:text-3xl relative w-3/4">
         <span className="flex flex-row justify-start items-center z-10">
           <p>M</p>
@@ -167,7 +167,7 @@ export const Nav = () => {
       </div>
       {wallet ? 
       <div className="flex flex-col text-lg md:text-sm fixed top-4 right-4 bg-zinc-950 bg-opacity-80 text-white p-2 rounded border-lime-400 hover:cursor-pointer border-2 shadow-red-700 shadow-md md:h-fit z-20" onClick={() => setWalletDropdownActive(!walletDropdownActive)}>
-        <span className={`${walletDropdownActive ? '' : '' }`}>{walletDropdownActive ? wallet.accounts[0].address : wallet.accounts[0].address.slice(0, 2) + wallet.accounts[0].address.slice(2, 6).toUpperCase() + "..." + wallet.accounts[0].address.slice(wallet.accounts[0].address.length - 4, wallet.accounts[0].address.length).toUpperCase()}</span>
+        <span className={`${walletDropdownActive ? '' : '' }`}>{walletDropdownActive ? wallet.accounts[0].address.slice(0,2) + wallet.accounts[0].address.slice(2, wallet.accounts[0].address.length).toUpperCase() : wallet.accounts[0].address.slice(0, 2) + wallet.accounts[0].address.slice(2, 6).toUpperCase() + "..." + wallet.accounts[0].address.slice(wallet.accounts[0].address.length - 4, wallet.accounts[0].address.length).toUpperCase()}</span>
         <span className={`${walletDropdownActive ? '' : 'hidden'}`}>Balance {wallet.accounts[0].balance?.ETH.slice(0, 8)} ETH</span>
         <span className={`${walletDropdownActive ? '' : 'hidden'}`}>Network: {store.getState().wallet.chain}</span>
         <span className={`${walletDropdownActive ? 'hover:bg-red-700 mx-0 rounded text-center' : 'hidden'}`} onClick={() => (wallet ? disconnect(wallet) : connect())}>Disconnect</span>
