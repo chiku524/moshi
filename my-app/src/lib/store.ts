@@ -1,8 +1,8 @@
 import type { Action, ThunkAction } from "@reduxjs/toolkit";
 import { combineSlices, configureStore } from "@reduxjs/toolkit";
+import { walletSlice } from "./features/walletSlice";
 
-
-const rootReducer = combineSlices();
+const rootReducer = combineSlices(walletSlice);
 
 export type RootState = ReturnType<typeof rootReducer>;
 
@@ -10,9 +10,8 @@ export type RootState = ReturnType<typeof rootReducer>;
 export const makeStore = () => {
   return configureStore({
     reducer: rootReducer,
-    middleware: (getDefaultMiddleware) => {
-      return getDefaultMiddleware();
-    },
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware({serializableCheck: false}),
   });
 };
 

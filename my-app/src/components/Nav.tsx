@@ -5,10 +5,10 @@ import { ethers } from 'ethers';
 import moshiLogo from '../images/moshi-logo.png';
 import { Link, useLocation } from "react-router-dom";
 import { gsap } from 'gsap';
+import { walletAccounts, walletChain, walletLabel, walletProvider } from "../lib/features/walletSlice";
+import { useAppDispatch, useAppStore } from "../lib/hooks";
 
 
-// Sign up to get your free API key at https://explorer.blocknative.com/?signup=true
-  // Required for Transaction Notifications and Transaction Preview
   const apiKey = '1730eff0-9d50-4382-a3fe-89f0d34a2070'
 
   const injected = injectedModule()
@@ -18,7 +18,6 @@ import { gsap } from 'gsap';
 
   // initialize Onboard
   init({
-    // This javascript object is unordered meaning props do not require a certain order
     apiKey,
     wallets: [injected],
     chains: [
@@ -45,17 +44,38 @@ export const Nav = () => {
   const [bubArray] = useState<number[]>([]);
   const [bubArray1] = useState<number[]>([]);
   const [bubArray2] = useState<number[]>([]);
+  const [walletDropdownActive, setWalletDropdownActive] = useState(false);
   const [{ wallet, connecting }, connect, disconnect] = useConnectWallet()
   const pathname = useLocation();
+  const dispatch = useAppDispatch();
+  const store = useAppStore();
 
   // create an ethers provider
   let ethersProvider;
 
   if (wallet) {
-    // if using ethers v6 this is:
-    // ethersProvider = new ethers.BrowserProvider(wallet.provider, 'any')
     ethersProvider = new ethers.BrowserProvider(wallet.provider, 'any')
   }
+
+  useLayoutEffect(() => {
+    if(wallet) {
+      dispatch(walletAccounts(wallet.accounts));
+      //set wallet network chain
+      if(wallet.chains[0].id === "0x1"){dispatch(walletChain("Ethereum"))};
+      if(wallet.chains[0].id === "0x2105"){dispatch(walletChain("Base"))};
+      // dispatch(walletChain(wallet.chains));
+      // wallet ? dispatch(walletInstance(wallet.instance)) : console.log("no wallet connected");
+      dispatch(walletLabel(wallet.label));
+      dispatch(walletProvider(wallet.provider));
+      // wallet ? dispatch(walletWagmiConnector(wallet.wagmiConnector)) : console.log("no wallet connected");
+    }
+  }, [wallet])
+
+  //console logs
+  // useLayoutEffect(() => {
+  //   console.log('store', store.getState());
+  //   console.log('wallet', wallet)
+  // }, [wallet])
 
   useAccountCenter()
 
@@ -108,18 +128,18 @@ export const Nav = () => {
       y: tankHeight,
       repeat: -1,
       duration: 3.5,
-      delay: 2.5
+      delay: 2.25
     })
     gsap.to("#bubble2", {
       y: tankHeight,
       repeat: -1,
       duration: 3.5,
-      delay: 1.5
+      delay: 1.25
     })
   }, [])
 
   return (
-    <nav className="w-auto bg-slate-950 bg-opacity-90 flex flex-col md:w-screen text-3xl md:text-lg items-center">
+    <nav className="w-auto bg-zinc-950 flex flex-col md:w-screen text-3xl md:text-lg items-center">
       <Link to="/" id="logo" className="text-violet-700 flex flex-col items-center p-6 md:p-1 md:pt-5 md:text-3xl relative w-3/4">
         <span className="flex flex-row justify-start items-center z-10">
           <p>M</p>
@@ -130,9 +150,9 @@ export const Nav = () => {
         </span>
         <img src={moshiLogo} className="min-w-24 min-h-24 max-w-24 max-h-24 z-10" alt="moshi logo"/>
         <div id="tank" className="absolute w-full h-full overflow-hidden top-0">
-          {bubArray && bubArray.map((item, index) => <div key={index} id="bubble" className={`bubble-${index} aspect-square rounded-full bg-white bg-opacity-50 absolute top-0 left-0 w-0.5`} />)}
-          {bubArray1 && bubArray1.map((item, index) => <div key={index} id="bubble1" className={`bubble-${index} aspect-square rounded-full bg-white bg-opacity-50 absolute top-0 left-0 w-0.5`} />)}
-          {bubArray2 && bubArray2.map((item, index) => <div key={index} id="bubble2" className={`bubble-${index} aspect-square rounded-full bg-white bg-opacity-50 absolute top-0 left-0 w-0.5`} />)}
+          {bubArray && bubArray.map((item, index) => <div key={index} id="bubble" className={`bubble-${index} aspect-square rounded-full bg-white bg-opacity-50 absolute -top-10 left-0 w-0.5`} />)}
+          {bubArray1 && bubArray1.map((item, index) => <div key={index} id="bubble1" className={`bubble-${index} aspect-square rounded-full bg-white bg-opacity-50 absolute -top-10 left-0 w-0.5`} />)}
+          {bubArray2 && bubArray2.map((item, index) => <div key={index} id="bubble2" className={`bubble-${index} aspect-square rounded-full bg-white bg-opacity-50 absolute -top-10 left-0 w-0.5`} />)}
         </div>
       </Link>
       <hr className="w-10/12" />
@@ -147,10 +167,13 @@ export const Nav = () => {
         <hr className="w-10/12" />
       </div>
       {wallet ? 
-      <div className="text-2xl md:text-lg fixed top-4 right-4 bg-red-700 text-neutral-950 p-2 rounded-tr-3xl rounded-bl-3xl hover:border-lime-400 hover:cursor-pointer hover:border-2 hover:shadow-red-700 hover:shadow-md md:h-fit" onClick={() => (wallet ? disconnect(wallet) : connect())}>
-        {connecting ? 'Connecting' : "Disconnect"}
+      <div className="flex flex-col text-lg md:text-sm fixed top-4 right-4 bg-zinc-950 bg-opacity-80 text-white p-2 rounded hover:border-lime-400 hover:cursor-pointer hover:border-2 hover:shadow-red-700 hover:shadow-md md:h-fit z-20" onClick={() => setWalletDropdownActive(!walletDropdownActive)}>
+        <span className={`${walletDropdownActive ? '' : '' }`}>{walletDropdownActive ? wallet.accounts[0].address : wallet.accounts[0].address.slice(0, 2) + wallet.accounts[0].address.slice(2, 6).toUpperCase() + "..." + wallet.accounts[0].address.slice(wallet.accounts[0].address.length - 4, wallet.accounts[0].address.length).toUpperCase()}</span>
+        <span className={`${walletDropdownActive ? '' : 'hidden'}`}>Balance {wallet.accounts[0].balance?.ETH.slice(0, 8)} ETH</span>
+        <span className={`${walletDropdownActive ? '' : 'hidden'}`}>Network: {store.getState().wallet.chain}</span>
+        <span className={`${walletDropdownActive ? 'hover:bg-red-700 mx-0 rounded text-center' : 'hidden'}`} onClick={() => (wallet ? disconnect(wallet) : connect())}>Disconnect</span>
       </div> : 
-      <div className="text-2xl md:text-lg fixed top-4 right-4 bg-sky-600 text-lime-400 p-2 rounded-tr-3xl rounded-bl-3xl hover:border-lime-400 hover:cursor-pointer hover:border-2 hover:shadow-sky-600 hover:shadow-md md:h-fit" onClick={() => (wallet ? disconnect(wallet) : connect())}>
+      <div className="text-2xl md:text-lg fixed top-4 right-4 bg-zinc-950 text-lime-400 p-2 rounded hover:border-lime-400 hover:cursor-pointer hover:border-2 hover:shadow-blue-600 hover:shadow-md md:h-fit" onClick={() => (wallet ? disconnect(wallet) : connect())}>
         {connecting ? 'Connecting' : 'Connect'}
       </div>
       }
