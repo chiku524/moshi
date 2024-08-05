@@ -63,7 +63,6 @@ export const Nav = () => {
       //set wallet network chain
       if(wallet.chains[0].id === "0x1"){dispatch(walletChain("Ethereum"))};
       if(wallet.chains[0].id === "0x2105"){dispatch(walletChain("Base"))};
-      // dispatch(walletChain(wallet.chains));
       // wallet ? dispatch(walletInstance(wallet.instance)) : console.log("no wallet connected");
       dispatch(walletLabel(wallet.label));
       dispatch(walletProvider(wallet.provider));
@@ -167,13 +166,13 @@ export const Nav = () => {
         <hr className="w-10/12" />
       </div>
       {wallet ? 
-      <div className="flex flex-col text-lg md:text-sm fixed top-4 right-4 bg-zinc-950 bg-opacity-80 text-white p-2 rounded hover:border-lime-400 hover:cursor-pointer hover:border-2 hover:shadow-red-700 hover:shadow-md md:h-fit z-20" onClick={() => setWalletDropdownActive(!walletDropdownActive)}>
+      <div className="flex flex-col text-lg md:text-sm fixed top-4 right-4 bg-zinc-950 bg-opacity-80 text-white p-2 rounded border-lime-400 hover:cursor-pointer border-2 shadow-red-700 shadow-md md:h-fit z-20" onClick={() => setWalletDropdownActive(!walletDropdownActive)}>
         <span className={`${walletDropdownActive ? '' : '' }`}>{walletDropdownActive ? wallet.accounts[0].address : wallet.accounts[0].address.slice(0, 2) + wallet.accounts[0].address.slice(2, 6).toUpperCase() + "..." + wallet.accounts[0].address.slice(wallet.accounts[0].address.length - 4, wallet.accounts[0].address.length).toUpperCase()}</span>
         <span className={`${walletDropdownActive ? '' : 'hidden'}`}>Balance {wallet.accounts[0].balance?.ETH.slice(0, 8)} ETH</span>
         <span className={`${walletDropdownActive ? '' : 'hidden'}`}>Network: {store.getState().wallet.chain}</span>
         <span className={`${walletDropdownActive ? 'hover:bg-red-700 mx-0 rounded text-center' : 'hidden'}`} onClick={() => (wallet ? disconnect(wallet) : connect())}>Disconnect</span>
       </div> : 
-      <div className="text-2xl md:text-lg fixed top-4 right-4 bg-zinc-950 text-lime-400 p-2 rounded hover:border-lime-400 hover:cursor-pointer hover:border-2 hover:shadow-blue-600 hover:shadow-md md:h-fit" onClick={() => (wallet ? disconnect(wallet) : connect())}>
+      <div className="text-2xl md:text-lg fixed top-4 right-4 bg-zinc-950 text-lime-400 p-2 rounded border-lime-400 hover:cursor-pointer border-2 shadow-red-700 shadow-md md:h-fit" onClick={() => (wallet ? disconnect(wallet) : connect())}>
         {connecting ? 'Connecting' : 'Connect'}
       </div>
       }
