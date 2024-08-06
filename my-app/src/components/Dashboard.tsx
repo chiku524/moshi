@@ -57,7 +57,7 @@ export const Dashboard = () => {
                         <hr className=""/>
                         <div className="bg-slate-900 rounded w-full">
                             {supplyMarket.map(item => item.balance > 0 ? 
-                                <div className="flex flex-row justify-around my-5">
+                                <div className="flex flex-row justify-around my-5 bg-slate-800 bg-opacity-40 rounded border-slate-800 border-2 shadow-sm shadow-violet-700">
                                     <span className="m-3 w-1/4 flex justify-start items-center">{item.asset}</span>
                                     <span className="m-3 w-1/4 flex justify-start items-center">{item.apy}%</span>
                                     <span className="m-3 w-1/4 flex justify-start items-center">{item.balance}</span>
@@ -80,7 +80,7 @@ export const Dashboard = () => {
                         <hr className=""/>
                         <div className="bg-slate-900 rounded w-full">
                             {borrowMarket.map(item => item.balance > 0 ? 
-                                <div className="flex flex-row justify-around my-5">
+                                <div className="flex flex-row justify-around my-5 bg-slate-800 bg-opacity-40 rounded border-slate-800 border-2 shadow-sm shadow-violet-700">
                                     <span className="m-3 w-1/4 flex justify-start items-center">{item.asset}</span>
                                     <span className="m-3 w-1/4 flex justify-start items-center">{item.apy}%</span>
                                     <span className="m-3 w-1/4 flex justify-start items-center">{item.balance}</span>
