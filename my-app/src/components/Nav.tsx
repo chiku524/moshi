@@ -143,7 +143,7 @@ export const Nav = () => {
         <span className="flex flex-row justify-start items-center z-10">
           <p>M</p>
           <p>O</p>
-          <p>S</p>
+          <p>C</p>
           <p>H</p>
           <p>I</p>
         </span>

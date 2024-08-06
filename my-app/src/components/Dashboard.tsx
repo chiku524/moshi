@@ -44,9 +44,23 @@ export const Dashboard = () => {
 
     return (
         <div className="flex flex-row w-full mx-auto md:mx-0 md:flex-col h-fit md:h-fit bg-slate-700 justify-center">
-            <div className="flex flex-col w-full mx-10 md:mx-auto my-20 md:my-5 items-center">
+            <div className="flex flex-col w-full ml-60 mr-10 md:mx-auto my-20 md:my-5 items-center">
+                <div className="w-fit med:px-20 mx-10 md:mx-auto my-20 md:my-5 flex flex-row justify-center items-center bg-slate-900 border-2 border-slate-800 shadow-violet-700 shadow-sm text-white">
+                    <div className="m-3 flex flex-col">
+                        <span className="text-center mb-2">Net Balance</span>
+                        <span className="self-center">$0.00</span>
+                    </div>
+                    <div className="m-3 flex flex-col">
+                        <span className="text-center mb-2">Net Supplied</span>
+                        <span className="self-center">$0.00</span>
+                    </div>
+                    <div className="m-3 flex flex-col">
+                        <span className="text-center mb-2">Net Borrowed</span>
+                        <span className="self-center">$0.00</span>
+                    </div>
+                </div>
                 <div className='flex flex-row md:flex-col w-full justify-center'>
-                    <div className="bg-slate-900 rounded text-white med:p-5 m-5 med:w-4/12 flex flex-col">
+                    <div className="bg-slate-900 rounded text-white med:p-5 m-5 med:w-4/12 flex flex-col shadow-sm shadow-violet-700 border-slate-800 border-2">
                         <span className="underline mx-auto text-xl m-2">Supplying</span>
                         <div className="bg-slate-900 rounded flex flex-row justify-between">
                             <span className="m-3 w-1/4 flex justify-start items-center">Assets</span>
@@ -56,8 +70,8 @@ export const Dashboard = () => {
                         </div>
                         <hr className=""/>
                         <div className="bg-slate-900 rounded w-full">
-                            {supplyMarket.map(item => item.balance > 0 ? 
-                                <div className="flex flex-row justify-around my-5 bg-slate-800 bg-opacity-40 rounded border-slate-800 border-2 shadow-sm shadow-violet-700">
+                            {supplyMarket.map((item, key) => item.balance > 0 ? 
+                                <div key={key} className="flex flex-row justify-around my-5 bg-slate-800 bg-opacity-40 rounded border-slate-800 border-2 shadow-sm shadow-violet-700">
                                     <span className="m-3 w-1/4 flex justify-start items-center">{item.asset}</span>
                                     <span className="m-3 w-1/4 flex justify-start items-center">{item.apy}%</span>
                                     <span className="m-3 w-1/4 flex justify-start items-center">{item.balance}</span>
@@ -69,7 +83,7 @@ export const Dashboard = () => {
                             )}
                         </div>
                     </div>
-                    <div className="bg-slate-900 rounded text-white med:p-5 m-5 md:mb-24 med:w-4/12 flex flex-col">
+                    <div className="bg-slate-900 rounded text-white med:p-5 m-5 md:mb-24 med:w-4/12 flex flex-col shadow-sm shadow-violet-700 border-slate-800 border-2">
                         <span className="underline mx-auto text-xl m-2">Borrowing</span>
                         <div className="bg-slate-900 rounded flex flex-row justify-between">
                             <span className="m-3 w-1/4 flex justify-start items-center">Assets</span>
@@ -79,8 +93,8 @@ export const Dashboard = () => {
                         </div>
                         <hr className=""/>
                         <div className="bg-slate-900 rounded w-full">
-                            {borrowMarket.map(item => item.balance > 0 ? 
-                                <div className="flex flex-row justify-around my-5 bg-slate-800 bg-opacity-40 rounded border-slate-800 border-2 shadow-sm shadow-violet-700">
+                            {borrowMarket.map((item, key) => item.balance > 0 ? 
+                                <div key={key} className="flex flex-row justify-around my-5 bg-slate-800 bg-opacity-40 rounded border-slate-800 border-2 shadow-sm shadow-violet-700">
                                     <span className="m-3 w-1/4 flex justify-start items-center">{item.asset}</span>
                                     <span className="m-3 w-1/4 flex justify-start items-center">{item.apy}%</span>
                                     <span className="m-3 w-1/4 flex justify-start items-center">{item.balance}</span>
