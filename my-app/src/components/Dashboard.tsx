@@ -2,22 +2,29 @@ import { useLayoutEffect, useState } from "react";
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import { useAppSelector, useAppStore } from "../lib/hooks";
+import { useWriteContract, useAccount } from 'wagmi';
+import CompTokenABI from "../web3/ABI/CompToken.json";
+import { walletClient, account } from "../config";
+import { result } from "../web3/functions";
 
 export const Dashboard = () => {
 //   const dispatch = useAppDispatch();
     const store = useAppStore();
-    const wallet = useAppSelector((state) => state.wallet)
-    const [address, setAddress] = useState("Please connect wallet.");
-    const [balance, setBalance] = useState("0.000001");
+    const wallet = useAppSelector((state) => state.wallet.walletAddress);
+    // const [address, setAddress] = useState("Please connect wallet.");
+    const [balance, setBalance] = useState("10");
+    const { writeContract, data: hash, isPending, error } = useWriteContract();
+
+    // const contractGrab = () => {
+    //     writeContract({ abi: CompTokenABI, address: "0x507f0F5E58d21f07d133722e038067248fe4ecBE", functionName: 'approve', args: [account!, BigInt(100000000)]})
+    //     console.log('hi')
+    //     console.log(isPending, hash, error);
+    // }
+
+    const CompTokenAddress = "0x507f0F5E58d21f07d133722e038067248fe4ecBE";
 
     useLayoutEffect(() => {
-
-        // if(wallet.accounts[0]) {
-        //     setAddress(wallet.accounts[0].address);
-        //     setBalance(wallet.accounts[0].balance);
-        // }
-        // console.log(wallet);
-        // console.log('store in dashbopard', store.getState());
+        console.log('wallet addy', wallet);
     }, [wallet])
 
     const supplyMarket = [
@@ -61,7 +68,7 @@ export const Dashboard = () => {
                 </div>
                 <div className='flex flex-row md:flex-col w-full justify-center'>
                     <div className="bg-slate-900 rounded text-white med:p-5 m-5 med:w-4/12 flex flex-col shadow-sm shadow-violet-700 border-slate-800 border-2">
-                        <span className="underline mx-auto text-xl m-2">Supplying</span>
+                        <span className="mx-auto text-xl m-2">Supplying</span>
                         <div className="bg-slate-900 rounded flex flex-row justify-between">
                             <span className="m-3 w-1/4 flex justify-start items-center">Assets</span>
                             <span className="m-3 w-1/4 flex justify-start items-center">APY</span>
@@ -71,7 +78,8 @@ export const Dashboard = () => {
                         <hr className=""/>
                         <div className="bg-slate-900 rounded w-full">
                             {supplyMarket.map((item, key) => item.balance > 0 ? 
-                                <div key={key} className="flex flex-row justify-around my-5 bg-slate-800 bg-opacity-40 rounded border-slate-800 border-2 shadow-sm shadow-violet-700">
+                                // <div onClick={async () => await walletClient.writeContract(result).catch((err) => console.log(err))} key={key} className="hover:cursor-pointer flex flex-row justify-around my-5 bg-slate-800 bg-opacity-40 rounded border-slate-800 border-2 shadow-sm shadow-violet-700">
+                                <div onClick={async () => await writeContract({abi: CompTokenABI, address: CompTokenAddress, functionName: 'approve', args: [wallet, 100000000]})} key={key} className="hover:cursor-pointer flex flex-row justify-around my-5 bg-slate-800 bg-opacity-40 rounded border-slate-800 border-2 shadow-sm shadow-violet-700">
                                     <span className="m-3 w-1/4 flex justify-start items-center">{item.asset}</span>
                                     <span className="m-3 w-1/4 flex justify-start items-center">{item.apy}%</span>
                                     <span className="m-3 w-1/4 flex justify-start items-center">{item.balance}</span>
@@ -84,7 +92,7 @@ export const Dashboard = () => {
                         </div>
                     </div>
                     <div className="bg-slate-900 rounded text-white med:p-5 m-5 md:mb-24 med:w-4/12 flex flex-col shadow-sm shadow-violet-700 border-slate-800 border-2">
-                        <span className="underline mx-auto text-xl m-2">Borrowing</span>
+                        <span className="mx-auto text-xl m-2">Borrowing</span>
                         <div className="bg-slate-900 rounded flex flex-row justify-between">
                             <span className="m-3 w-1/4 flex justify-start items-center">Assets</span>
                             <span className="m-3 w-1/4 flex justify-start items-center">APY</span>

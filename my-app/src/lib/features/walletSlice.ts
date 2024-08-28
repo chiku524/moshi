@@ -3,46 +3,34 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 
 
 interface WalletState {
-  accounts: any,
-  chain: any,
-  icon: any,
-  instance: any,
-  label: any,
-  provider: any,
-  wagmiConnector: any
+  walletViemClient: any,
+  walletConnectors: any,
+  showConnectModal: boolean,
+  walletAddress: string | undefined
 }
 
 const initialState = {
-accounts: [],
-chain: "",
-icon: "",
-instance: undefined,
-label: "",
-provider: {},
-wagmiConnector: undefined
+  walletViemClient: {},
+  walletConnectors: [],
+  showConnectModal: false,
+  walletAddress: ""
 } satisfies WalletState as WalletState
 
 export const walletSlice = createAppSlice({
   name: 'wallet',
   initialState,
   reducers: (create) => ({
-    walletAccounts: create.reducer((state:any, action:PayloadAction<{}>) => {
-      state.accounts = action.payload;
+    walletViemClient: create.reducer((state: any, action: PayloadAction<{}>) => {
+      state.walletViemClient = action.payload;
     }),
-    walletChain: create.reducer((state:any, action:PayloadAction<{}>) => {
-      state.chain = action.payload;
+    walletConnectors: create.reducer((state: any, action: PayloadAction<{}>) => {
+      state.walletConnectors = action.payload;
     }),
-    walletInstance: create.reducer((state:any, action:PayloadAction<{}>) => {
-      state.instance = action.payload;
+    showConnectModal: create.reducer((state: any, action: PayloadAction<{}>) => {
+      state.showConnectModal = action.payload;
     }),
-    walletLabel: create.reducer((state:any, action:PayloadAction<string>) => {
-      state.label = action.payload;
-    }),
-    walletProvider: create.reducer((state:any, action:PayloadAction<{}>) => {
-      state.provider = action.payload;
-    }),
-    walletWagmiConnector: create.reducer((state:any, action:PayloadAction<string>) => {
-      state.wagmiConnector = action.payload;
+    walletAddress: create.reducer((state: any, action: PayloadAction<string | undefined>) => {
+      state.walletAddress = action.payload;
     }),
     // disconnectWallet(state) {
     //   disconnect(state.wallets)
@@ -55,4 +43,4 @@ export const walletSlice = createAppSlice({
 
 export const selectWalletInfo = (state:any) => state.wallet;
 
-export const { walletAccounts, walletChain, walletInstance, walletProvider, walletLabel, walletWagmiConnector } = walletSlice.actions
+export const { walletViemClient, walletConnectors, showConnectModal, walletAddress } = walletSlice.actions
