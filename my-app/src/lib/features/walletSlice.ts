@@ -6,6 +6,7 @@ interface WalletState {
   walletViemClient: any,
   walletConnectors: any,
   showConnectModal: boolean,
+  showSignModal: boolean,
   walletAddress: string | undefined
 }
 
@@ -13,6 +14,7 @@ const initialState = {
   walletViemClient: {},
   walletConnectors: [],
   showConnectModal: false,
+  showSignModal: false,
   walletAddress: ""
 } satisfies WalletState as WalletState
 
@@ -26,8 +28,11 @@ export const walletSlice = createAppSlice({
     walletConnectors: create.reducer((state: any, action: PayloadAction<{}>) => {
       state.walletConnectors = action.payload;
     }),
-    showConnectModal: create.reducer((state: any, action: PayloadAction<{}>) => {
+    showConnectModal: create.reducer((state: any, action: PayloadAction<boolean>) => {
       state.showConnectModal = action.payload;
+    }),
+    showSignModal: create.reducer((state: any, action: PayloadAction<boolean>) => {
+      state.showSignModal = action.payload;
     }),
     walletAddress: create.reducer((state: any, action: PayloadAction<string | undefined>) => {
       state.walletAddress = action.payload;
@@ -43,4 +48,4 @@ export const walletSlice = createAppSlice({
 
 export const selectWalletInfo = (state:any) => state.wallet;
 
-export const { walletViemClient, walletConnectors, showConnectModal, walletAddress } = walletSlice.actions
+export const { walletViemClient, walletConnectors, showConnectModal, showSignModal, walletAddress } = walletSlice.actions

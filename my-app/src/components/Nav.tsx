@@ -5,7 +5,7 @@ import { gsap } from 'gsap';
 import { useAppDispatch, useAppStore, useAppSelector } from "../lib/hooks";
 import { SignRejectedModal } from "./SignRejectedModal";
 import { ConnectModal } from './ConnectModal';
-import { showConnectModal, walletAddress, walletConnectors, walletViemClient } from "../lib/features/walletSlice";
+import { showConnectModal, showSignModal, walletAddress, walletConnectors, walletViemClient } from "../lib/features/walletSlice";
 import { createPublicClient, createWalletClient, http, custom, fallback, formatEther } from 'viem';
 import { mainnet, sepolia } from "viem/chains";
 import { useConnect, useAccount, useDisconnect } from 'wagmi';
@@ -28,8 +28,8 @@ export const Nav = () => {
   const [bubArray1] = useState<number[]>([]);
   const [bubArray2] = useState<number[]>([]);
   const [walletDropdownActive, setWalletDropdownActive] = useState(false);
-  const [showSignModal, setShowSignModal] = useState(false);
   const showConnectModalStatus = useAppSelector((state) => state.wallet.showConnectModal);
+  const showSignModalStatus = useAppSelector((state) => state.wallet.showSignModal);
   const pathname = useLocation();
   const dispatch = useAppDispatch();
   const [balance, setBalance] = useState<string>();
@@ -48,7 +48,7 @@ export const Nav = () => {
   async function disconnectAccounts() {
     if(window.ethereum) {
       await disconnect();
-      window.ethereum.close();
+      // window.ethereum.close();
       console.log('window.eth.close triggered');
       localStorage.setItem("isWalletConnected", "no");
     }
@@ -142,7 +142,7 @@ export const Nav = () => {
   document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape') {
       dispatch(showConnectModal(false));
-      setShowSignModal(false);
+      dispatch(showSignModal(false));
     }
   })
 
@@ -185,7 +185,7 @@ export const Nav = () => {
         Connect
       </div>
       }
-      {showSignModal ? <SignRejectedModal /> : null}
+      {showSignModalStatus ? <SignRejectedModal /> : null}
       {showConnectModalStatus ? <ConnectModal /> : null}
     </nav>
   );

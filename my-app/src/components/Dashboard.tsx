@@ -25,6 +25,7 @@ export const Dashboard = () => {
 
     useLayoutEffect(() => {
         console.log('wallet addy', wallet);
+        console.log('abi', CompTokenABI);
     }, [wallet])
 
     const supplyMarket = [
@@ -79,7 +80,7 @@ export const Dashboard = () => {
                         <div className="bg-slate-900 rounded w-full">
                             {supplyMarket.map((item, key) => item.balance > 0 ? 
                                 // <div onClick={async () => await walletClient.writeContract(result).catch((err) => console.log(err))} key={key} className="hover:cursor-pointer flex flex-row justify-around my-5 bg-slate-800 bg-opacity-40 rounded border-slate-800 border-2 shadow-sm shadow-violet-700">
-                                <div onClick={async () => await writeContract({abi: CompTokenABI, address: CompTokenAddress, functionName: 'approve', args: [wallet, 100000000]})} key={key} className="hover:cursor-pointer flex flex-row justify-around my-5 bg-slate-800 bg-opacity-40 rounded border-slate-800 border-2 shadow-sm shadow-violet-700">
+                                <div onClick={async () => await writeContract({abi: CompTokenABI, address: CompTokenAddress, functionName: 'transfer', args: [wallet, CompTokenAddress, 0.001]})} key={key} className="hover:cursor-pointer flex flex-row justify-around my-5 bg-slate-800 bg-opacity-40 rounded border-slate-800 border-2 shadow-sm shadow-violet-700">
                                     <span className="m-3 w-1/4 flex justify-start items-center">{item.asset}</span>
                                     <span className="m-3 w-1/4 flex justify-start items-center">{item.apy}%</span>
                                     <span className="m-3 w-1/4 flex justify-start items-center">{item.balance}</span>
